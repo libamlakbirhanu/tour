@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const compression = require('compression');
 
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ extended: false, limit: '10kb' }));
 app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 app.use(cookieParser());
+app.use(compression());
 
 //routes
 app.use('/', require('./routes/view-routes.js'));
