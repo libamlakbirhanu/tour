@@ -8,7 +8,7 @@
     "start:prod": "set NODE_ENV=production && nodemon server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "keywords": [],
   "author": "",
@@ -28,17 +28,13 @@
     "helmet": "^4.2.0",
     "hpp": "^0.2.3",
     "html-to-text": "^6.0.0",
-    "jsdom": "^16.4.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.20",
-    "method-override": "^3.0.0",
     "mongoose": "^5.11.7",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.17",
     "pug": "^3.0.0",
     "sharp": "^0.27.0",
     "slugify": "^1.4.6",
-    "socket.io": "^2.3.0",
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
   },
