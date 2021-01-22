@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
@@ -14,6 +15,12 @@ const globalErrorHandler = require('./controllers/error-controller');
 const app = express();
 
 app.enable('trust proxy');
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(cors());
+app.options('*', cors());
 
 const limiter = rateLimit({
   max: 100,
@@ -40,9 +47,6 @@ app.use(
     ],
   })
 );
-
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
