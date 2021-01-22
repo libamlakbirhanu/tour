@@ -17,14 +17,13 @@ const createToken = (id) => {
   });
 };
 
-const sendToken = (user, statusCode, res) => {
+const sendToken = (user, statusCode, req, res) => {
   const token = createToken(user.id);
   const cookieOptions = {
     expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
-
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('authToken', token, cookieOptions);
 
@@ -46,7 +45,7 @@ exports.signUp = catchAsyncErrors(async (req, res, next) => {
   const newUser = await User.create(req.body);
   const url = `${req.protocol}://${req.hostname}:3000/_me`;
   await new Email(newUser, url).sendWelcome();
-  sendToken(newUser, 201, res);
+  sendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsyncErrors(async (req, res, next) => {
@@ -63,7 +62,7 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
   if (!user || !(await user.isPasswordCorrect(password, user.password)))
     return next(new AppError('incorrect credentials', 401));
 
-  sendToken(user, 200, res);
+  sendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res, next) => {
@@ -179,7 +178,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
   user.passwordResetExpires = undefined;
   await user.save();
 
-  sendToken(user, 200, res);
+  sendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
@@ -193,5 +192,5 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   user.confirmPassword = confirmPassword;
   await user.save();
 
-  sendToken(user, 200, res);
+  sendToken(user, 200, req, res);
 });

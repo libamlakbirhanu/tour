@@ -13,6 +13,8 @@ const globalErrorHandler = require('./controllers/error-controller');
 
 const app = express();
 
+app.enable('trust proxy');
+
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
