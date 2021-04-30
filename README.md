@@ -1,6 +1,13 @@
 # Natours application
 
-A tour booking app made with modern javascript technologies (nodejs, expressjs, mongodb)
+A tour booking app made with modern javascript technologies (nodejs, expressjs, mongodb).
+
+# All the technologies used in the project:
+Node.js
+Express.js
+MongoDB
+Pug
+css
 
 # Screen shots:
 ![Screenshot (198)](https://user-images.githubusercontent.com/60085915/116712543-a0c38700-a9dc-11eb-9772-343d02c3e996.png)
